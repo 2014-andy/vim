@@ -28,6 +28,7 @@ Plugin 'mbbill/echofunc'
 Plugin 'dyng/ctrlsf.vim'
 " 模板补全
 Plugin 'SirVer/ultisnips'
+Plugin 'jiangmiao/auto-pairs'
 call vundle#end()  
 
 "filetype off
@@ -182,6 +183,8 @@ set smartindent
 " set guioptions+=r
 " set guioptions+=R
 " 高亮显示普通txt文件（需要txt.vim脚本）
+" 允许鼠标 
+"set mouse=a 
 
 " 映射全选+复制 ctrl+a
 map <C-A> ggVGY
