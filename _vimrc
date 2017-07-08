@@ -53,6 +53,9 @@ let g:syntastic_c_config_file = ['.syntastic_c_config']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
+" c++11 支持
+let g:syntastic_cpp_compiler = 'g++' "change the compiler to g++ to support c++11. 
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++' "set the options of g++ to suport c++11.
 
 inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项  
 set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)  
@@ -255,6 +258,12 @@ if has("cscope")
     " add any database in current directory
     if filereadable("./cscope.out")
         cs add cscope.out
+    elseif filereadable("../cscope.out")
+        cs add ../cscope.out
+    elseif filereadable("../../cscope.out")
+        cs add ../../cscope.out
+    elseif filereadable("../cscope.out")
+        cs add ../../cscope.out
     endif
     set csverb
 endif
