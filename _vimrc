@@ -259,11 +259,16 @@ if has("cscope")
     if filereadable("./cscope.out")
         cs add cscope.out
     elseif filereadable("../cscope.out")
-        cs add ../cscope.out
+        cs add ../cscope.out ../
     elseif filereadable("../../cscope.out")
-        cs add ../../cscope.out
-    elseif filereadable("../cscope.out")
-        cs add ../../cscope.out
+        cs add ../../cscope.out ../../
+    elseif filereadable("../../../cscope.out")
+        cs add ../../../cscope.out ../../../
+    elseif filereadable("../../../../cscope.out")
+        cs add ../../../../cscope.out ../../../../
+    elseif filereadable("../../../cscope.out")
+        cs add ../../../../../cscope.out ../../../../../
+
     endif
     set csverb
 endif
@@ -282,7 +287,6 @@ noremap <leader>ft :cs find t <C-R>=expand("<cword>")<CR><CR>
 noremap <leader>fc :cs find d <C-R>=expand("<cword>")<CR><CR>
 " 查找当前变量  查找C语言符号，即查找函数名、宏、枚举值等出现的地方
 noremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
-
 
 "map <F5> :!php -l %<CR>
 
@@ -313,6 +317,43 @@ func! FormatCode()
     endif
 
     exec lineNum
+endfunc
+
+" 更新 cscope 文件
+map <F3> :call UpdateCscope() <CR>
+func! UpdateCscope()
+    wa
+    if filereadable("./cscope.out")
+        cs kill 0
+        :r !cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add cscope.out
+    elseif filereadable("../cscope.out")
+        cs kill 0
+        :r !cd .. && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add ../cscope.out ../
+    elseif filereadable("../../cscope.out")
+        cs kill 0
+        :r !cd ../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add ../../cscope.out ../../
+    elseif filereadable("../../../cscope.out")
+        cs kill 0
+        :r !cd ../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add ../../../cscope.out ../../../
+    elseif filereadable("../../../../cscope.out")
+        cs kill 0
+        :r !cd ../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add ../../../../cscope.out ../../../../
+    elseif filereadable("../../../../../cscope.out")
+        cs kill 0
+        :r !cd ../../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        sleep 2
+        cs add ../../../../../cscope.out ../../../../../
+    endif
 endfunc
 
 " echofunc 配置
