@@ -53,6 +53,16 @@ let g:syntastic_c_config_file = ['.syntastic_c_config']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
+let g:ycm_warning_symbol = '>*'
+" vim 颜色表 http://blog.csdn.net/cp3alai/article/details/45509459
+" warning 代码块颜色 ctermbg 背景色 ctermfg 前景色
+highlight YcmWarningSection ctermbg=11
+" warning 标记颜色
+highlight YcmWarningSign ctermbg=11
+" 代码中出错字段颜色 
+" highlight YcmErrorSection 
+" 出错行颜色  
+"highlight YcmErrorLine  
 " c++11 支持
 let g:syntastic_cpp_compiler = 'g++' "change the compiler to g++ to support c++11. 
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++' "set the options of g++ to suport c++11.
