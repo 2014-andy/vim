@@ -29,6 +29,7 @@ Plugin 'dyng/ctrlsf.vim'
 " 模板补全
 Plugin 'SirVer/ultisnips'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'vim-scripts/c.vim'
 call vundle#end()  
 
 "filetype off
@@ -207,6 +208,8 @@ map <F12> gg=G
 "代码折叠--------------------------------------------
 set foldmethod=syntax
 set foldlevel=100  
+"设置开启关闭paste模式的快捷键
+set pastetoggle=<F4>
 "启动gvim时不要自动折叠
 ""用法如下 在普通模式(命令行)下输入以下
 " za 打开/关闭当前折叠 
@@ -336,32 +339,26 @@ func! UpdateCscope()
     if filereadable("./cscope.out")
         cs kill 0
         :r !cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add cscope.out
     elseif filereadable("../cscope.out")
         cs kill 0
         :r !cd .. && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add ../cscope.out ../
     elseif filereadable("../../cscope.out")
         cs kill 0
         :r !cd ../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add ../../cscope.out ../../
     elseif filereadable("../../../cscope.out")
         cs kill 0
         :r !cd ../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add ../../../cscope.out ../../../
     elseif filereadable("../../../../cscope.out")
         cs kill 0
         :r !cd ../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add ../../../../cscope.out ../../../../
     elseif filereadable("../../../../../cscope.out")
         cs kill 0
         :r !cd ../../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
-        sleep 2
         cs add ../../../../../cscope.out ../../../../../
     endif
 endfunc
