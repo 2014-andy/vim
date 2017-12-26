@@ -61,7 +61,7 @@ highlight YcmWarningSection ctermbg=11
 " warning 标记颜色
 highlight YcmWarningSign ctermbg=11
 " 代码中出错字段颜色 
-" highlight YcmErrorSection 
+highlight YcmErrorSection ctermbg=9
 " 出错行颜色  
 "highlight YcmErrorLine  
 " c++11 支持
@@ -151,8 +151,6 @@ set encoding=utf-8
 set fileencodings=utf-8,cp936,gb2312,gbk,gb18030
 set showcmd
 filetype plugin indent on
-set foldcolumn=2
-set foldmethod=marker
 set backupdir=~/.backup/vim
 set backupext=.bak
 " 设置行号
@@ -194,8 +192,8 @@ set scrolloff=3
 " 为C程序提供自动缩进
 set smartindent
 " 显示右侧滚动条
-" set guioptions+=r
-" set guioptions+=R
+"set guioptions+=r
+"set guioptions+=R
 " 高亮显示普通txt文件（需要txt.vim脚本）
 " 允许鼠标 
 "set mouse=a 
@@ -206,7 +204,10 @@ map! <C-A> <Esc>ggVGY
 map <F12> gg=G
 " 选中状态下 Ctrl+c 复制
 "代码折叠--------------------------------------------
-set foldmethod=syntax
+set foldcolumn=2
+"set foldmethod=marker
+"set foldmethod=syntax
+set foldmethod=indent
 set foldlevel=100  
 "设置开启关闭paste模式的快捷键
 set pastetoggle=<F4>
@@ -279,10 +280,14 @@ if has("cscope")
         cs add ../../../cscope.out ../../../
     elseif filereadable("../../../../cscope.out")
         cs add ../../../../cscope.out ../../../../
-    elseif filereadable("../../../cscope.out")
+    elseif filereadable("../../../../../cscope.out")
         cs add ../../../../../cscope.out ../../../../../
-
+    elseif filereadable("../../../../../../cscope.out")
+        cs add ../../../../../../cscope.out ../../../../../../
+    elseif filereadable("../../../../../../../cscope.out")
+        cs add ../../../../../../../cscope.out ../../../../../../../
     endif
+
     set csverb
 endif
 " 查找函数调用处
@@ -308,7 +313,11 @@ noremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 " 格式样式 http://www.cppblog.com/jerryma/archive/2012/02/02/164813.html
 map <F2> :call FormatCode()<CR>
 func! FormatCode()
+    " 删除行位空格 
+    %s/\s\+//g 
+    " 保存
     exec "w"
+    " 保存当前行
     let lineNum = line(".")
     if &filetype == 'c' || &filetype == 'h'
         exec "%!astyle --style=linux --suffix=none -A8\<CR>"
@@ -329,6 +338,7 @@ func! FormatCode()
         return
     endif
 
+    " 回复当前行
     exec lineNum
 endfunc
 
@@ -360,7 +370,15 @@ func! UpdateCscope()
         cs kill 0
         :r !cd ../../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
         cs add ../../../../../cscope.out ../../../../../
+    elseif filereadable("../../../../../../cscope.out")
+        cs kill 0
+        :r !cd ../../../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        cs add ../../../../../../cscope.out ../../../../../../
     endif
+        cs kill 0
+        :r !cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
+        cs add cscope.out
+    
 endfunc
 
 " echofunc 配置
