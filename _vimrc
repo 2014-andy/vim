@@ -313,8 +313,8 @@ noremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 " 格式样式 http://www.cppblog.com/jerryma/archive/2012/02/02/164813.html
 map <F2> :call FormatCode()<CR>
 func! FormatCode()
-    " 删除行位空格 
-    %s/\s\+//g 
+    " 删除行尾空格 
+    %s/\s\+$//g
     " 保存
     exec "w"
     " 保存当前行
@@ -374,10 +374,10 @@ func! UpdateCscope()
         cs kill 0
         :r !cd ../../../../../../ && cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
         cs add ../../../../../../cscope.out ../../../../../../
-    endif
-        cs kill 0
+    else 
         :r !cscope -Rbq -p\`pwd\` >/dev/null 2>&1 
         cs add cscope.out
+    endif
     
 endfunc
 
