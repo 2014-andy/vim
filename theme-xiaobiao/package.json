@@ -1,0 +1,17 @@
+{
+	"name": "theme-xiaobiao",
+	"displayName": "%displayName%",
+	"description": "%description%",
+	"version": "1.0.0",
+	"publisher": "vscode",
+	"engines": { "vscode": "*" },
+	"contributes": {
+		"themes": [
+			{
+				"label": "xiaobiao",
+				"uiTheme": "vs",
+				"path": "./themes/xiaobiao-color-theme.json"
+			}
+		]
+	}
+}
