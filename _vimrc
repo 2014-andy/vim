@@ -1,4 +1,5 @@
 set nocompatible  
+set autoread
 filetype off  
 set rtp+=~/.vim/bundle/Vundle.vim  
 call vundle#begin()  
@@ -127,8 +128,7 @@ let g:doxygen_enhanced_color = 1
 "7、 \cy 添加注释，并复制被添加注释的部分
 "8、 \c$ 注释当前光标到改行结尾的内容
 "9、 \cA 跳转到该行结尾添加注释，并进入编辑模式
-"10、\ca 转换注释的方式，比如： /**/和//
-"11、\cl \cb 左对齐和左右对其，左右对其主要针对/**/
+"10、\ca 转换注释的方式，比如： /**/和// "11、\cl \cb 左对齐和左右对其，左右对其主要针对/**/
 "12、\cu 取消注释
 
 "高亮c++语法配置
@@ -311,28 +311,26 @@ noremap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 
 " 格式化代码
 " 格式样式 http://www.cppblog.com/jerryma/archive/2012/02/02/164813.html
-map <F2> :call FormatCode()<CR>
+map <F2> :call FormatCode()<CR><CR>
 func! FormatCode()
     " 删除行尾空格 
-    %s/\s\+$//g
+    "%s/\s\+$//g
     " 保存
     exec "w"
     " 保存当前行
     let lineNum = line(".")
-    if &filetype == 'c' || &filetype == 'h'
-        exec "%!astyle --style=linux --suffix=none -A8\<CR>"
-    elseif &filetype == 'cpp' || &filetype == 'cc' || &filetype == 'hpp'
-        exec "%!astyle --style=linux -A8\<CR>"
+    if &filetype == 'c' || &filetype == 'h' || &filetype == 'cpp' || &filetype == 'cc' || &filetype == 'hpp'
+        exec "!astyle --style=google %"
     elseif &filetype == 'perl'
-        exec "!astyle --style=gnu --suffix=none %"
+        exec "!astyle --style=gnu %"
     elseif &filetype == 'py'|| &filetype == 'python'
-        exec "!autopep8 --in-place --aggressive %"
+        exec "!autopep8 --in-place %"
     elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
+        exec "!astyle --style=java %"
     elseif &filetype == 'jsp'
-        exec "!astyle --style=gnu --suffix=none %"
+        exec "!astyle --style=gnu %"
     elseif &filetype == 'xml'
-        exec "!astyle --style=gnu --suffix=none %"
+        exec "!astyle --style=gnu %"
     else
         exec "normal gg=G"
         return
